@@ -6,14 +6,14 @@
 makeCacheMatrix <- function(x = matrix()) {
         
         inv<-NULL
-        set <- function(y){
+        set <- function(y){     ## Set input matrix
                 x <<- y
                 Inv <<- NULL
         }
-        get<- function(){x}
-        setInverse<-function(inverse){inv<<-inverse}
-        getInverse<-function(){inv}
-        list(set=set,
+        get<- function(){x}     ## Obtaining input matrix
+        setInverse<-function(inverse){inv<<-inverse}    ## Setting inverse matrix
+        getInverse<-function(){inv}      ## Obtaining inverse matrix
+        list(set=set,                 ## Creating result list
              get=get,
              setInverse=setInverse,
              getInverse=getInverse)
@@ -25,20 +25,27 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         inv<-x$getInverse()
-        if(!is.null(inv)){
+        if(!is.null(inv)){      ## Obtaining cached data
                 message("getting inversed matrix!")
                 return(inv)
         }
         mat<-x$get()
         inv<-solve(mat,...)
+        message("calculating ... ")
         x$setInverse(inv)
-        inv
+        message("*********      Matrix is inversed      *********")
+        invisible( inv)## Return a matrix that is the inverse of 'x'
 }
 
 
 ################### Example to test  #######################
-##      f<-makeCacheMatrix(matrix(c(1,0,5,2,1,6,3,5,0) , 3 , 3))
 
-##      f$get()
+##      To create a matrix      --->      f<-makeCacheMatrix(matrix(c(1,0,5,2,1,6,3,5,0) , 3 , 3))
 
-##      cacheSolve(f)
+##      To see the content of the matrix        --->    f$get()
+
+##      To creating inverted matrix             --->    cacheSolve(f)           
+
+##      To See the inverted Matrix              --->    f$getInverse()
+
+################### Good Luck  #######################
